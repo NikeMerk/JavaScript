@@ -1,0 +1,32 @@
+html {
+	box-sizing: border-box;
+}
+
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+.item {
+	width: 300px;
+	justify-content: space-between;
+	display: flex;
+}
+
+.list {
+	padding: 0;
+}
+
+.nav {
+	margin-bottom: 30px;
+}
+
+.link {
+	text-decoration: none;
+	color: inherit;
+	margin-right: 20px;
+}
+
+.item-done {
+	background-color: green;
+}
