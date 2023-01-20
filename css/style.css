@@ -1,0 +1,14 @@
+html {
+	box-sizing: border-box;
+}
+
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+.item {
+	width: 300px;
+	justify-content: space-between;
+	display: flex;
+}
