@@ -122,6 +122,7 @@
 				name: inputValue,
 				done: false,
 			};
+			
 
 			listArray.push(newObj);
 			startList.append(createItem(newObj).item);
