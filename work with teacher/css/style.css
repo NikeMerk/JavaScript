@@ -1,0 +1,28 @@
+html {
+	box-sizing: border-box;
+}
+
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+.flex {
+	display: flex;
+}
+
+body {
+	min-width: 200px;
+}
+
+.container {
+	margin: 0 auto;
+	max-width: 500px;
+	background-color: aquamarine;
+}
+
+.main-title {
+  margin-left: auto;
+	margin-right: auto;
+	width: 202px
+}
