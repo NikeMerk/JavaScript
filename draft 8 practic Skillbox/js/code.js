@@ -1,136 +1,149 @@
-(function () {
-	let listArray = [];
-	let listName = localStorage.getItem('listArray');
 
-	function createSpecialId(arr) { // гениратор ID
+	let listArray = [];
+	let saveList = '';
+
+	function getSpecialId(array) { // Гениратора id 
 		let maxNumber = 0;
-		for (let elem of arr) {
-			if (elem.id > maxNumber) {
-				maxNumber = elem.id;
-			}
+		for (let elem of array) {
+			if (elem.id > maxNumber) maxNumber = elem.id;
 		}
 		return maxNumber + 1;
 	}
 
-	function createTitle(title) {
+	function createTitle(title) { // Заголовок
 		let todoTitle = document.createElement('h3');
-		todoTitle.innerHTML = title;
-		return todoTitle;
-	}
-
-	function createList() { // Cписок
-		let list = document.createElement('ul');
-		list.classList.add('list');
-		return list;
-	}
+		todoTitle.textContent = title;
+    return todoTitle;
+  }
 
 	function createForm() { // Форма
 		let form = document.createElement('form');
 		let input = document.createElement('input');
-		let button = document.createElement('button');
+		let formBlock = document.createElement('div');
+		let formButton = document.createElement('button');
 
 		form.classList.add('form');
 		input.classList.add('input');
-		button.classList.add('button');
+		formBlock.classList.add('form-block');
+		formButton.classList.add('form-button');
 
-		input.placeholder = 'input placeholder';
-		button.textContent = 'push me';
+		input.placeholder = 'input';
+		formButton.textContent = 'push';
 
-		button.disabled = true;
+		formBlock.append(formButton);
+		form.append(input, formBlock);
+
+		formButton.disabled = true;
 		input.oninput = () => {
-			input.value ? button.disabled = false : button.disabled = true;
+			input.value ? formButton.disabled = false : formButton.disabled = true;
 		};
 
-		form.append(input, button);
-
 		return {
-			form,
+			form, 
 			input,
-			button,
+			formBlock,
+			formButton,
 		}
 	}
 
-	function createItem(obj) { // Лишки
+	function createList() { // Лист
+		let list = document.createElement('ul');
+		list.classList.add('list');
+    return list;
+	}
+
+	function createItem(obj) { // Пункты списка
+
 		let item = document.createElement('li');
-		let itemText = document.createElement('span');
+		let span = document.createElement('span');
 		let itemBlock = document.createElement('div');
-		let itemButtonDone = document.createElement('button');
-		let itemButtonDelete = document.createElement('button');
+		let buttonDone = document.createElement('button');
+		let buttonDelete = document.createElement('button');
 
 		item.classList.add('item');
-		itemText.classList.add('item-text');
-		itemButtonDone.classList.add('button-done');
-		itemButtonDelete.classList.add('button-delete');
+		span.classList.add('span');
+		itemBlock.classList.add('item-block');
+		buttonDone.classList.add('button-done');
+		buttonDelete.classList.add('button-delete');
 
-		
-		itemText.innerText = obj.name;
-		itemButtonDone.innerText = 'done';
-		itemButtonDelete.innerText = 'delete';
+		span.textContent = obj.name;
+		buttonDone.textContent = 'done';
+		buttonDelete.textContent = 'delete';
 
-		itemBlock.append(itemButtonDone, itemButtonDelete);
-		item.append(itemText, itemBlock);
+		itemBlock.append(buttonDone, buttonDelete);
+		item.append(span, itemBlock);
 
 		if (obj.done == true) {
 			item.classList.toggle('item-done');
 		}
 
-		itemButtonDone.onclick = () => {
+		buttonDone.onclick = () => {
 			item.classList.toggle('item-done');
 			for (let elem of listArray) {
 				if (elem.id == obj.id) elem.done = !elem.done;
+				localStorage.setItem(saveList, JSON.stringify(listArray));
 			}
-			localStorage.setItem('listArray', JSON.stringify(listArray));
+			console.log(listArray)
 		};
 
-		itemButtonDelete.onclick = () => {
-			if(confirm('Are you sure?')) item.remove();	
-			for (let elem = 0; elem < listArray.length; elem++) {
-				if (listArray[elem].id == obj.id) listArray.splice(elem, 1);
+		buttonDelete.onclick = () => {
+			if(confirm('Are you sure?')) {
+				item.remove();
+				for (let elem = 0; elem < listArray.length; elem++) {
+					if (listArray[elem].id == obj.id) listArray.splice(elem, 1);
+					localStorage.setItem(saveList, JSON.stringify(listArray));
+				}
 			}
-			localStorage.setItem('listArray', JSON.stringify(listArray));
+			console.log(listArray)
 		};
 
 		return {
-			item, 
-			itemText,
-			itemBlock,
-			itemButtonDone,
-			itemButtonDelete,
-		};
+			item,
+      span,
+      itemBlock,
+      buttonDone,
+			buttonDelete,
+		}
 	}
 
-	function createTodoApp(container, title) {
-		let kayName = title;
-		let startTitle = createTitle(title)
+	function createTodoApp(container, title) { // Приложение
+		let startTitle = createTitle(title);
 		let startList = createList();
 		let startForm = createForm();
+
 		container.append(startTitle, startForm.form, startList);
-		
-		if (listName != null && listName != '') { // проверка на наличие локала
-			listArray = JSON.parse(localStorage.getItem('listArray'));
-			for (let elem of listArray) {
-				startList.append(createItem(elem).item);
-			}
+
+		let keyNameLocalStorage = title;
+		saveList = keyNameLocalStorage;
+		console.log(saveList)
+
+		if (saveList != null && saveList != '') {
+			listArray = JSON.parse(localStorage.getItem(saveList));
+      if (listArray!= null && listArray!= '') {
+        for (let elem of listArray) {
+          startList.append(createItem(elem).item);
+        }
+      }
 		}
 
-		startForm.button.onclick = (e) => {
+		let formButtonClick = document.querySelector('.container .form .form-block .form-button');
+		let inputValue = document.querySelector('.container .form .input');
+		
+		formButtonClick.onclick = (e) => {
 			e.preventDefault();
 
-			let inputValue = document.querySelector('.container .input').value;
 			let newObj = {
-				id: createSpecialId(listArray),
-				name: inputValue,
+				id: getSpecialId(listArray),
+				name: inputValue.value,
 				done: false,
-			};
-			
-
+			}
 			listArray.push(newObj);
 			startList.append(createItem(newObj).item);
-			startForm.button.disabled = true;
 			startForm.input.value = '';
-			localStorage.setItem('kayName', JSON.stringify(listArray));
-			console.log(kayName)
+			startForm.formButton.disabled = true;
+			console.log(listArray);
+			localStorage.setItem(saveList, JSON.stringify(listArray));
 		}
-	};
+  }
+
 	window.createTodoApp = createTodoApp;
-})();
