@@ -12,3 +12,7 @@ console.log(result); // false
 let arrOne = [2, 4, 6, 8];
 let resultOne = arrOne.every(elem => elem % 2 == 0);
 console.log(resultOne); // true
+
+let arrTwo = ['one', 'one', 'one']
+let resultTwo = arrTwo.every(elem => elem == 'one');
+console.log(resultTwo); 
