@@ -1,66 +1,56 @@
-let button = document.querySelector('.container .button');
-let answerTitle = document.querySelector('.container .answer')
-let gameArrayCity = [];
-let arrayCityUs = [];
+let allCity = [];
+let arrayUsCity = [];
+let arrLustLatter = [];
 let variable = 0;
 (function newArr() {
 	for (let elem of cities) {
-		gameArrayCity.push(elem);
+		allCity.push(elem);
 	}
 })();
 
 
 // ---------------------- основной код --------------------------------
 
-button.style.display = 'none';
-alert('ВНИМАНИЕ! Все города должны быть написаны с маленькой буквы!');
-	main(prompt('Введите название города.'))
-	function main(checkNameCity) {  // проверка на наличие города в массиве с городами
-	
-		let result = gameArrayCity.some(elem => elem == checkNameCity);
-		result ? deleteCity(checkNameCity) : checkWareIsCity(checkNameCity), 
-		main(prompt(`введите город. Вам на: ${checkNameCity[0]}.`));
-	}
-	
-	function checkWareIsCity(wareCity) {
-		arrayCityUs.some(elem => elem == wareCity) ? alert('Город уже называли!') : main(prompt(`Введите город корректно. Вам на: ${wareCity[0]}.`));
-	}
 
-	function deleteCity(nameCity) {  // удаление названного города из массива
-	
-		let lustLetterNameCity = checkLustLetterNameCity(nameCity); 
-		for (let i = 0; i < gameArrayCity.length; i++) {
-			if (gameArrayCity[i] == nameCity) {
-				arrayCityUs.push(gameArrayCity[i]);
-				gameArrayCity.splice(i, 1);
-				break;
-			}
-		}
-		getCityOnLustLetter(lustLetterNameCity);
+function checkLustLetterNameCity(elem) {	// определение последней буквы города
+	if (elem[elem.length - 1] == 'ъ' || elem[elem.length - 1] == 'ь' || elem[elem.length - 1] == 'ы') {
+		return elem[elem.length - 2];
 	}
-	
-	function checkLustLetterNameCity(elem) {	// определение последней буквы города
-	
-		if (elem[elem.length - 1] == 'ъ' || elem[elem.length - 1] == 'ь' || elem[elem.length - 1] == 'ы') {
-			return elem[elem.length - 2];
-		}
-		else {
-			return elem[elem.length - 1];
+	else {
+		return elem[elem.length - 1];
+	}
+}
+
+function main(inputCity) {  
+	let result = allCity.some(elem => elem == nameCity);
+	result ? continues(inputCity) : inputErrors(inputCity);
+}
+
+
+function continues(nameCity) {  
+	let lustLatter = checkLustLetterNameCity(nameCity);
+	for (let i = 0; i < allCity.length; i++) {
+		if (allCity[i] == nameCity) {
+			arrayUsCity.push(allCity[i]);
+			allCity.splice(i, 1);
+			break;
 		}
 	}
-	
-	function getCityOnLustLetter(lustLetter) {
-		for (let i = 0; i < gameArrayCity.length; i++) {
-			if (gameArrayCity[i][0] == lustLetter) {
-				arrayCityUs.push(gameArrayCity[i]);
-				gameArrayCity.splice(i, 1);
-				main(prompt(`${gameArrayCity[i]}, вам на: ${checkLustLetterNameCity(gameArrayCity[i])}.`));
-			} 
-			else answerTitle.textContent = 'Городов на эту букву не найдено. Вы выйграли!'; 
+	getCity(lustLatter);
+}
+
+function inputErrors() {
+	if (variable == 0) main(prompt('Впишите город правильно!'));
+// not eat
+}
+
+function getCity(lustLatter) {
+	for (let i = 0; i < allCity.length; i++)  {
+		let firstLetterCity = allCity[i][0];
+		if (firstLetterCity == lustLatter) {
+			arrayUsCity.push(allCity[i]);
+			arrLustLatter.push(allCity[i][allCity.length - 1]);
+			allCity.splice(i, 1);
 		}
 	}
-
-
-
-
-
+}
