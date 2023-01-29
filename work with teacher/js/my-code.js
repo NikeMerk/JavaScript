@@ -8,49 +8,93 @@ let variable = 0;
 	}
 })();
 
+// ---------------------- Основные функции --------------------------------
 
-// ---------------------- основной код --------------------------------
-
-
-function checkLustLetterNameCity(elem) {	// определение последней буквы города
-	if (elem[elem.length - 1] == 'ъ' || elem[elem.length - 1] == 'ь' || elem[elem.length - 1] == 'ы') {
-		return elem[elem.length - 2];
-	}
-	else {
-		return elem[elem.length - 1];
-	}
-}
+alert('Внимание! Все города должны быть написаны с маленькой буквы!');
+main(prompt('Введите город.'));
 
 function main(inputCity) {  
-	let result = allCity.some(elem => elem == nameCity);
+	let result = allCity.some(elem => elem == inputCity);
 	result ? continues(inputCity) : inputErrors(inputCity);
 }
 
+function continues(nameCity) {
+	let lustLatter = getLastLetterCity(nameCity);
 
-function continues(nameCity) {  
-	let lustLatter = checkLustLetterNameCity(nameCity);
 	for (let i = 0; i < allCity.length; i++) {
 		if (allCity[i] == nameCity) {
 			arrayUsCity.push(allCity[i]);
+			variable++;
 			allCity.splice(i, 1);
 			break;
 		}
 	}
-	getCity(lustLatter);
+	getCityOnLustLetter(lustLatter);
 }
 
-function inputErrors() {
-	if (variable == 0) main(prompt('Впишите город правильно!'));
-// not eat
+function inputErrors(city) {
+	if (variable == 0) main(prompt(`Не успели начать, а уже ошибка. Введите имя города корректно пожалуйста!`));
+	else {
+		checkCorrectInputLetter(city);
+	}
 }
 
-function getCity(lustLatter) {
-	for (let i = 0; i < allCity.length; i++)  {
-		let firstLetterCity = allCity[i][0];
-		if (firstLetterCity == lustLatter) {
-			arrayUsCity.push(allCity[i]);
-			arrLustLatter.push(allCity[i][allCity.length - 1]);
-			allCity.splice(i, 1);
+// ---------------------- функции проверки --------------------------------
+
+function checkCorrectInputLetter(inputCityName) {  // глобальная проверка введенного города
+	let firstLetterInputCityName = inputCityName[0];
+	let lastLetterInArrLetter = arrLustLatter[arrLustLatter.length - 1];
+	let getUsCity = arrayUsCity.some(elem => elem == inputCityName);
+	let getAllCity = allCity.some(elem => elem == inputCityName);
+
+	if (firstLetterInputCityName != lastLetterInArrLetter) {
+		checkCorrectInputLetter(prompt(`Вы написали город не на ту букву. Вам на: ${lastLetterInArrLetter}.`));
+	}
+	else {
+		if (getUsCity) { // проверка на наличие введенного города в массиве ИСПОЛЬЗОВАННЫХ городов
+			checkCorrectInputLetter(prompt(`Город уже называли. давайте снова. Вам на: ${lastLetterInArrLetter}.`));
+		}
+		else {
+			if(getAllCity) { // проверка на наличие введенного города в массиве ВСЕХ городов
+				main(inputCityName);
+			}
+			else {
+				checkCorrectInputLetter(prompt(`Введите город правильно. Вам на: ${lastLetterInArrLetter}.`))
+			}
 		}
 	}
 }
+
+function getCityOnLustLetter(lustLatter) {
+	let resultPc = allCity.some(elem => elem[0] == lustLatter);
+	if (!resultPc) {
+		alert(`Вы победили!`);
+	}else {
+		for (let i = 0; i < allCity.length; i++) {
+			let firstLetterCity = allCity[i][0];
+			let cityOnThisLatter = allCity[i];
+
+			if (firstLetterCity == lustLatter) {
+				arrayUsCity.push(cityOnThisLatter);
+				arrLustLatter.push(getLastLetterCity(cityOnThisLatter));
+				allCity.splice(i, 1);
+				let resultUser = allCity.some(elem => elem[0] == arrLustLatter[arrLustLatter.length - 1]);
+				if (!resultUser) {
+					alert(`Вы Проиграли!`);
+				}else {
+					checkCorrectInputLetter(prompt(`${cityOnThisLatter}, вам на: ${arrLustLatter[arrLustLatter.length - 1]}`));
+				}
+			}
+		}
+	}
+}
+
+function getLastLetterCity(elem) {	// определение последней буквы города
+	let lastLetterCity = elem[elem.length - 1];
+	if (lastLetterCity == 'ъ' || lastLetterCity == 'ь' || lastLetterCity == 'ы') {
+		return elem[elem.length - 2];
+	}else {
+		return elem[elem.length - 1];
+	}
+}
+
