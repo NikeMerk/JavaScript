@@ -13,12 +13,12 @@ let variable = 0;
 alert('Внимание! Все города должны быть написаны с маленькой буквы!');
 main(prompt('Введите город.'));
 
-function main(inputCity) {  
+function main(inputCity) {  // основная(начальная) функция
 	let result = allCity.some(elem => elem == inputCity);
 	result ? continues(inputCity) : inputErrors(inputCity);
 }
 
-function continues(nameCity) {
+function continues(nameCity) {  // инспектор done input
 	let lustLatter = getLastLetterCity(nameCity);
 
 	for (let i = 0; i < allCity.length; i++) {
@@ -32,7 +32,7 @@ function continues(nameCity) {
 	getCityOnLustLetter(lustLatter);
 }
 
-function inputErrors(city) {
+function inputErrors(city) {  // инспектор error input
 	if (variable == 0) main(prompt(`Не успели начать, а уже ошибка. Введите имя города корректно пожалуйста!`));
 	else {
 		checkCorrectInputLetter(city);
@@ -65,7 +65,7 @@ function checkCorrectInputLetter(inputCityName) {  // глобальная пр�
 	}
 }
 
-function getCityOnLustLetter(lustLatter) {
+function getCityOnLustLetter(lustLatter) { // выдать игроку город на посл-ю бук-у его города
 	let resultPc = allCity.some(elem => elem[0] == lustLatter);
 	if (!resultPc) {
 		alert(`Вы победили!`);
