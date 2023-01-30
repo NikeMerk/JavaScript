@@ -69,6 +69,7 @@ function getCityOnLustLetter(lustLatter) { // выдать игроку горо
 	let resultPc = allCity.some(elem => elem[0] == lustLatter);
 	if (!resultPc) {
 		alert(`Вы победили!`);
+		return;
 	}else {
 		for (let i = 0; i < allCity.length; i++) {
 			let firstLetterCity = allCity[i][0];
@@ -81,6 +82,7 @@ function getCityOnLustLetter(lustLatter) { // выдать игроку горо
 				let resultUser = allCity.some(elem => elem[0] == arrLustLatter[arrLustLatter.length - 1]);
 				if (!resultUser) {
 					alert(`Вы Проиграли!`);
+					return;
 				}else {
 					checkCorrectInputLetter(prompt(`${cityOnThisLatter}, вам на: ${arrLustLatter[arrLustLatter.length - 1]}`));
 				}
