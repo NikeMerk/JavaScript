@@ -99,4 +99,3 @@ function getLastLetterCity(elem) {	// определение последней 
 		return elem[elem.length - 1];
 	}
 }
-
