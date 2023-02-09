@@ -2,6 +2,7 @@ let allCity = [];
 let arrayUsCity = [];
 let arrLustLatter = [];
 let variable = 0;
+let finished = false;
 (function newArr() {
 	for (let elem of cities) {
 		allCity.push(elem);
@@ -15,12 +16,21 @@ main(prompt('Введите город.'));
 
 function main(inputCity) {  // основная(начальная) функция
 	let result = allCity.some(elem => elem == inputCity);
-	result ? continues(inputCity) : inputErrors(inputCity);
+	result ? deleteCity(inputCity) : inputErrors(inputCity);
+	let lustLatter = getLastLetterCity(nameCity);
+	getCityOnLustLetter(lustLatter);
+	checkFinished();
 }
 
-function continues(nameCity) {  // инспектор done input
-	let lustLatter = getLastLetterCity(nameCity);
+function checkFinished(elem) {
+	let resultPc = allCity.some(elem => elem[0] == lustLatter);
+	if (!resultPc) {
+		alert(`Вы победили!`);
+		finished = true;
+	}
+}
 
+function deleteCity(nameCity) {  // инспектор done input
 	for (let i = 0; i < allCity.length; i++) {
 		if (allCity[i] == nameCity) {
 			arrayUsCity.push(allCity[i]);
@@ -29,7 +39,6 @@ function continues(nameCity) {  // инспектор done input
 			break;
 		}
 	}
-	getCityOnLustLetter(lustLatter);
 }
 
 function inputErrors(city) {  // инспектор error input
@@ -66,27 +75,14 @@ function checkCorrectInputLetter(inputCityName) {  // глобальная пр�
 }
 
 function getCityOnLustLetter(lustLatter) { // выдать игроку город на посл-ю бук-у его города
-	let resultPc = allCity.some(elem => elem[0] == lustLatter);
-	if (!resultPc) {
-		alert(`Вы победили!`);
-		return;
-	}else {
-		for (let i = 0; i < allCity.length; i++) {
-			let firstLetterCity = allCity[i][0];
-			let cityOnThisLatter = allCity[i];
-
-			if (firstLetterCity == lustLatter) {
-				arrayUsCity.push(cityOnThisLatter);
-				arrLustLatter.push(getLastLetterCity(cityOnThisLatter));
-				allCity.splice(i, 1);
-				let resultUser = allCity.some(elem => elem[0] == arrLustLatter[arrLustLatter.length - 1]);
-				if (!resultUser) {
-					alert(`Вы Проиграли!`);
-					return;
-				}else {
-					checkCorrectInputLetter(prompt(`${cityOnThisLatter}, вам на: ${arrLustLatter[arrLustLatter.length - 1]}`));
-				}
-			}
+	for (let i = 0; i < allCity.length; i++) {
+		let firstLetterCity = allCity[i][0];
+		let cityOnThisLatter = allCity[i];
+		if (firstLetterCity == lustLatter) {
+			arrayUsCity.push(cityOnThisLatter);
+			arrLustLatter.push(getLastLetterCity(cityOnThisLatter));
+			allCity.splice(i, 1);
+			checkCorrectInputLetter(prompt(`${cityOnThisLatter}, вам на: ${arrLustLatter[arrLustLatter.length - 1]}`));
 		}
 	}
 }
