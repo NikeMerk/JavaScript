@@ -1,40 +1,18 @@
 
 let array = [];
-let arrayNumbersCompare = [];
-let arrayRandom = [];
+let howMuchCardsMustBe = [];
+let arrayObjects = [];
+let checkTwoObjects = [];
 let picTimeout;
-let falseTimeout;
-let textNumber;
-let numberOne;
-let numberTwo;
+let variable = 0;
+let pushed = 0;
+let loop = 0;
+let oneCard;
+let falseSetTimeout;
+let falsePicTimeout
 
-
-function pushNumbersInArray(number) {
-  for (let i = 0; i < number / 2; i++) {
-    array.push(i, i);
-  }
-  createArrayRandom(array);
-}
-
-function createArrayRandom(arr) { //
-  let m = arr.length, t, i;
-  while (m) {
-    i = Math.floor(Math.random() * m--);
-    t = arr[m];
-    arr[m] = arr[i];
-    arr[i] = t;
-  }
-}
-
-function checkValidInputNumber(numberInput) {
-  if (numberInput % 2 != 0) {
-    alert('Please, inter even numbers!');
-    startGame();
-  }
-}
 
 function createForm() {
-
   let form = document.createElement('form');
   let inputWidth = document.createElement('input');
   let inputHeight = document.createElement('input');
@@ -61,57 +39,95 @@ function createForm() {
   }
 }
 
-function createButtonReload() {
-  let button = document.createElement('button');
-  button.classList.add('button-reload');
-  button.textContent = 'play again';
-  return button;
-}
-
 function createMainBlock() {
   let mainBlock = document.createElement('div');
   mainBlock.classList.add('card');
   return mainBlock;
 }
 
-function createCards(i) {
-  let cards = document.createElement('div');
-  cards.classList.add('cards');
-  cards.textContent = i;
-  cards.onclick = () => {
-    textNumber = i;
-    clearTimeout(picTimeout);
-    cards.style = 'transform: rotateY(180deg);'
-    picTimeout = setTimeout(() => {
-      cards.style = `background-image: url(img/pic-${i}.jpg)`;
-    }, 290);
-    let result = checkTwoCards(i)
-    if (result == false) {
-      clearInterval(falseTimeout);
-      falseTimeout = setTimeout(() => {
-        cards.style = 'transform: rotateY(-180deg); transition: transform, 0.9s ease';
-      }, 900);
-    }
-  };
-  return cards;
-}
-
-function checkTwoCards(number) {
-  arrayNumbersCompare.push(number)
-  console.log(arrayNumbersCompare)
-  if (arrayNumbersCompare.length == 2) {
-    if (arrayNumbersCompare[0] != arrayNumbersCompare[1]){
-      console.log('false')
-      return false;
-    }
-    else {
-      return true;
-    }
+function createArrayRandom(arr) {
+  let m = arr.length, t, i;
+  while (m) {
+    i = Math.floor(Math.random() * m--);
+    t = arr[m];
+    arr[m] = arr[i];
+    arr[i] = t;
   }
 }
 
+function checkValidInputNumber(numberInput) {
+  if (numberInput % 2 != 0) {
+    alert('Please, inter even numbers!');
+    startGame();
+  }
+  if (numberInput > 16) {
+    alert('Sum can not be more than 16');
+    startGame();
+  }
+}
+
+function pushNumbersInArray(number) {
+  for (let i = 0; i < number; i++) {
+    howMuchCardsMustBe.push(i);
+  }
+  for (let i = 0; i < howMuchCardsMustBe.length / 2; i++) {
+    array.push(i);
+    array.push(i);
+  }
+  createArrayRandom(array);
+}
+
+function createCards(obj) {
+  let cards = document.createElement('div');
+  // cards.classList.add('card-number');
+  cards.classList.add('cards');
+  cards.id = obj.id;
+
+  cards.textContent = obj.textNumber;
+
+  cards.onclick = () => {
+    cards.classList.toggle('reverse-cards');
+    clearTimeout(picTimeout);
+    picTimeout = setTimeout(() => {
+      cards.style = `background-image: url(/img/pic-${obj.textNumber}.jpg)`
+    }, 290);
+    if (loop > 0) {
+      if (oneCard.textContent != cards.textContent) {
+        falseSetTimeout = setTimeout(() =>{
+          cards.classList.toggle('reverse-cards');
+          oneCard.classList.toggle('reverse-cards');
+          falsePicTimeout = setTimeout(() =>{
+            cards.style = `background-image: none)`;
+            oneCard.style = `background-image: none)`;
+          },290);
+        },900);
+        loop = 0;
+      }else {
+        console.log(cards, oneCard)
+        setTimeout(() =>{
+          console.log(cards, oneCard)
+          cards.classList.toggle('card-disabled')
+          oneCard.classList.toggle('card-disabled');
+          loop = 0;
+        }, 800)
+      }
+    }else oneCard = cards, loop++ ;
+  };
+
+  return cards;
+}
 function takeStyle(blocks) {
-  for(let i of array) {
+  for (let i of howMuchCardsMustBe) {
+    let obj = {
+      id: i,
+    }
+    arrayObjects.push(obj);
+  }
+  for (let elem of arrayObjects) {
+    elem['textNumber'] = array[pushed];
+    pushed++;
+  }
+  for(let i of arrayObjects) {
     blocks.append(createCards(i));
   }
 }
@@ -119,42 +135,19 @@ function takeStyle(blocks) {
 function startGame(container) {
   const startForm = createForm();
   const downloadMainBlock = createMainBlock();
-  const buttonReload = createButtonReload();
   container.append(startForm.form, downloadMainBlock);
 
   startForm.formButton.onclick = (e) => {
-    container.append(buttonReload)
-    let widthInput = Number(startForm.inputWidth.value);
-    let heightInput = Number(startForm.inputHeight.value);
-    let numberInput = widthInput * heightInput;
+    let inputWidth = Number(startForm.inputWidth.value);
+    let inputHeight = Number(startForm.inputHeight.value);
+    let numberInput = inputWidth * inputHeight;
     checkValidInputNumber(numberInput);
 
     e.preventDefault();
 
     pushNumbersInArray(numberInput)
-    downloadMainBlock.style = `display:grid; grid-template-columns: repeat(${widthInput}, 1fr); grid-row-gap: 10px;`;
+    downloadMainBlock.style = `grid-template-columns: repeat(${inputWidth}, 1fr);`;
     takeStyle(downloadMainBlock);
-
-
   };
 }
-window.startGame = startGame
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+window.startGame = startGame;

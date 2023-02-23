@@ -30,29 +30,39 @@ html {
   margin: 0 auto;
 }
 
-.card {
-  max-width: 1000px;
-  justify-items: center
+.card-number {
+  opacity: 0;
 }
 
+.card-disabled {
+  pointer-events:none ;
+}
+
+.card {
+  display: grid;
+  grid-row-gap: 10px;
+}
 
 .cards {
   width: 200px;
-  height: 250px;
+  height: 200px;
   border-radius: 15px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-color: aqua;
+  background-color: gray;
+  color: gray;
   transition: transform 0.6s ease-in-out;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
 }
 
-.button-reload {
-  margin-left: 50%;
+.reverse-cards {
+  transform: rotateY(180deg);
 }
 
-.reversed {
-  transform: rotateY(-180deg);
+.main-display {
+  transition: display 0.6s ease-in-out;
+}
+
+.active {
+  transform: rotateY(180deg);
 }
