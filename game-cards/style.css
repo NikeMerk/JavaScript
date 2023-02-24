@@ -11,16 +11,44 @@ html {
 .page {
   min-width: 1200px;
   font-family: 'Montserrat';
+
+}
+
+.button-reload {
+  background-color: chartreuse;
+  border-radius: 7px;
+  position: absolute;
+  padding: 8px 16px;
+  border: none;
+  top: 45%;
+  left: 44.5%;
+  font-size: 33px;
 }
 
 .container {
   max-width: 1000px;
   padding: 0 50px;
   margin: 0 auto;
+  transition: opacity .5s linear;
+}
+
+.container-opacity {
+  opacity: 0.4;
+  pointer-events:none;
 }
 
 .title {
   text-align: center;
+  transition: font-size 1s ease-in-out;
+}
+
+.min {
+  text-align: center;
+  font-size: 30px;
+}
+
+.title-animation {
+  font-size: 60px;
 }
 
 .form {
@@ -38,9 +66,39 @@ html {
   pointer-events:none ;
 }
 
+.input {
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 21px;
+  width: 115px;
+}
+
 .card {
   display: grid;
   grid-row-gap: 10px;
+  justify-items: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.card-opacity {
+  opacity: 1;
+}
+
+.form__button {
+  border: none;
+  background-color: rebeccapurple;
+  padding: 15px 35px;
+  border-radius: 10px;
+  font-size: 30px;
+}
+
+.form-block {
+  margin-bottom: 20px;
+}
+
+.form__input-width {
+  margin-right: 20px;
 }
 
 .cards {
@@ -52,17 +110,29 @@ html {
   background-size: cover;
   background-color: gray;
   color: gray;
+  font-size: 0;
   transition: transform 0.6s ease-in-out;
+  transform: rotateY(180deg);
+}
+
+.form {
+  transition: opacity 1s ease-in-out;
+}
+
+.form-none {
+  opacity: 0;
+}
+
+.form-display {
+  display: none;
 }
 
 .reverse-cards {
-  transform: rotateY(180deg);
+  transform: rotateY(0deg);
 }
 
 .main-display {
   transition: display 0.6s ease-in-out;
 }
 
-.active {
-  transform: rotateY(180deg);
-}
+

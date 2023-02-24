@@ -1,4 +1,4 @@
-
+let min = 60;
 let array = [];
 let howMuchCardsMustBe = [];
 let arrayObjects = [];
@@ -9,8 +9,10 @@ let pushed = 0;
 let loop = 0;
 let oneCard;
 let falseSetTimeout;
-let falsePicTimeout
-
+let falsePicTimeout;
+let myInterval;
+let title = document.getElementById('title');
+let titleMin = document.getElementById('min');
 
 function createForm() {
   let form = document.createElement('form');
@@ -20,9 +22,12 @@ function createForm() {
   let formBlock = document.createElement('div');
 
   form.classList.add('form');
-  inputHeight.classList.add('form__input-height');
-  inputWidth.classList.add('form__input-width');
+  form.id = 'form';
+  formBlock.classList.add('form-block');
+  inputHeight.classList.add('form__input-height', 'input');
+  inputWidth.classList.add('form__input-width', 'input');
   formButton.classList.add('form__button');
+  formButton.id = 'form-button'
 
   inputHeight.placeholder = 'height';
   inputWidth.placeholder = 'in width';
@@ -42,7 +47,20 @@ function createForm() {
 function createMainBlock() {
   let mainBlock = document.createElement('div');
   mainBlock.classList.add('card');
+  mainBlock.id = 'card';
   return mainBlock;
+}
+
+function createReloadButton(text) {
+  let button = document.createElement('button');
+  button.classList.add('button-reload');
+  button.id = ('button-reload');
+  button.textContent = text;
+
+  button.onclick = () => {
+    window.location.reload();
+  };
+  return button;
 }
 
 function createArrayRandom(arr) {
@@ -79,7 +97,6 @@ function pushNumbersInArray(number) {
 
 function createCards(obj) {
   let cards = document.createElement('div');
-  // cards.classList.add('card-number');
   cards.classList.add('cards');
   cards.id = obj.id;
 
@@ -103,10 +120,9 @@ function createCards(obj) {
         },900);
         loop = 0;
       }else {
-        console.log(cards, oneCard)
         setTimeout(() =>{
-          console.log(cards, oneCard)
-          cards.classList.toggle('card-disabled')
+          console.log(cards, oneCard);
+          cards.classList.toggle('card-disabled');
           oneCard.classList.toggle('card-disabled');
           loop = 0;
         }, 800)
@@ -116,6 +132,7 @@ function createCards(obj) {
 
   return cards;
 }
+
 function takeStyle(blocks) {
   for (let i of howMuchCardsMustBe) {
     let obj = {
@@ -135,19 +152,45 @@ function takeStyle(blocks) {
 function startGame(container) {
   const startForm = createForm();
   const downloadMainBlock = createMainBlock();
+  const pushButton = createReloadButton('Play again?');
   container.append(startForm.form, downloadMainBlock);
 
   startForm.formButton.onclick = (e) => {
     let inputWidth = Number(startForm.inputWidth.value);
     let inputHeight = Number(startForm.inputHeight.value);
+    if (inputWidth == 0 || inputHeight == 0) {
+      alert('Please enter all input');
+      window.location.reload();
+    }
     let numberInput = inputWidth * inputHeight;
     checkValidInputNumber(numberInput);
 
     e.preventDefault();
 
-    pushNumbersInArray(numberInput)
+    let form = document.getElementById('form');
+    let mainBlock = document.getElementById('card');
+    title.classList.toggle('title-animation');
+    startForm.formButton.disabled = true;
+    setTimeout(() => {
+      form.classList.toggle('form-display');
+      mainBlock.classList.toggle('card-opacity');
+    }, 1000);
+    startForm.form.classList.toggle('form-none');
+
+    pushNumbersInArray(numberInput);
     downloadMainBlock.style = `grid-template-columns: repeat(${inputWidth}, 1fr);`;
     takeStyle(downloadMainBlock);
+    myInterval = setInterval(() => {
+      if (min == '0') {
+        clearInterval(myInterval);
+        titleMin.textContent = 'you lose';
+        container.classList.toggle('container-opacity');
+        document.body.append(pushButton);
+      }
+      titleMin.textContent = String(min);
+      min--;
+    }, 1000);
   };
 }
+
 window.startGame = startGame;
