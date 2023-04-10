@@ -1,196 +1,223 @@
-let min = 60;
-let array = [];
-let howMuchCardsMustBe = [];
-let arrayObjects = [];
-let checkTwoObjects = [];
-let picTimeout;
-let variable = 0;
-let pushed = 0;
-let loop = 0;
-let oneCard;
-let falseSetTimeout;
-let falsePicTimeout;
-let myInterval;
-let title = document.getElementById('title');
-let titleMin = document.getElementById('min');
+let timeNum = 60;
+let howMuchCardsMustBe = []; // массив с номерами карточек (по порядку)
+let parArray = []; // массив с парными номерами
+let cardClick = 0;
+let temporarily;
+let mySetTimeout;
+let mySetInterval;
+let checkFinish = 0
 
-function createForm() {
+function createButtonReload() { // создание кнопки перезагрузки (сыграть еще)
+  let button = document.createElement('button');
+  button.classList.add('button-reload');
+  button.innerHTML = 'Сыграть еще?';
+  button.onclick = () => {
+    window.location.reload()
+  }
+  return button;
+}
+
+function startTimerGame($titleTimer) { // запуск таймера игры 60 сек
+  let $container = document.body.querySelector('.container');
+
+  mySetInterval = setInterval(() => {
+    if (timeNum == 0) {
+      clearInterval(mySetInterval);
+      alert('Время вышло. Вы проиграли');
+      $container.classList.toggle('container-opacity');
+      document.body.append(createButtonReload());
+    }
+    $titleTimer.textContent = timeNum;
+    timeNum -= 1;
+  }, 1000);
+
+}
+
+function checkFinishGame() { // проверка завершения игры
+  let allCardInGame = howMuchCardsMustBe.length;
+  let container = document.body.querySelector('.container');
+  if (allCardInGame == checkFinish) {
+    alert('Вы Победили!')
+    container.classList.toggle('container-opacity');
+    document.body.append(createButtonReload());
+  }
+}
+
+function createRandomParArray() { // гениратор рандома номеров
+  let m = parArray.length, t, i;
+  while (m) {
+    i = Math.floor(Math.random() * m--);
+    t = parArray[m];
+    parArray[m] = parArray[i];
+    parArray[i] = t;
+  }
+}
+
+function createParArray() { // создание парных номеров
+  for (let i = 0; i < howMuchCardsMustBe.length / 2; i++) {
+    parArray.push(i, i);
+  }
+  createRandomParArray();  // создание рандомного массива
+}
+
+function createArrAllNumbers(inputWidth, inputHeight) { // создание номеров(кол-ва) карточек
+  let sum = inputHeight * inputWidth;
+  for (let i = 0; i < sum; i++) {
+    howMuchCardsMustBe.push(i);
+  };
+}
+
+function checkValidInput(inputWidth, inputHeight) { // проверка валидности введенных данных input
+  let inputSum = inputWidth * inputHeight;
+  if (inputWidth == 0 || inputHeight == 0) alert('Впишите все значения'), window.location.reload();
+  if (inputSum > 16) alert('Не больше 16 карточек в сумме!'), window.location.reload();
+}
+
+function createForm() { // создание form
   let form = document.createElement('form');
+  let formBlock = document.createElement('div');
   let inputWidth = document.createElement('input');
   let inputHeight = document.createElement('input');
   let formButton = document.createElement('button');
-  let formBlock = document.createElement('div');
 
   form.classList.add('form');
-  form.id = 'form';
   formBlock.classList.add('form-block');
-  inputHeight.classList.add('form__input-height', 'input');
-  inputWidth.classList.add('form__input-width', 'input');
+  inputHeight.classList.add('input', 'input-height');
+  inputWidth.classList.add('input', 'input-width');
   formButton.classList.add('form__button');
-  formButton.id = 'form-button'
 
-  inputHeight.placeholder = 'height';
-  inputWidth.placeholder = 'in width';
-  formButton.textContent = 'Play';
+  formButton.textContent = 'Старт';
+  inputWidth.placeholder = 'в ширину';
+  inputHeight.placeholder = 'в высоту';
 
-  formBlock.append(inputWidth, inputHeight,)
+  formBlock.append(inputWidth, inputHeight);
   form.append(formBlock, formButton);
 
   return {
     form,
-    inputWidth,
+    formBlock,
     inputHeight,
+    inputWidth,
     formButton,
   }
 }
 
-function createMainBlock() {
+function createMainBlock() { // создание блока в котором будут карточки
   let mainBlock = document.createElement('div');
-  mainBlock.classList.add('card');
-  mainBlock.id = 'card';
+  mainBlock.classList.add('main-block');
   return mainBlock;
 }
 
-function createReloadButton(text) {
-  let button = document.createElement('button');
-  button.classList.add('button-reload');
-  button.id = ('button-reload');
-  button.textContent = text;
-
-  button.onclick = () => {
-    window.location.reload();
-  };
-  return button;
-}
-
-function createArrayRandom(arr) {
-  let m = arr.length, t, i;
-  while (m) {
-    i = Math.floor(Math.random() * m--);
-    t = arr[m];
-    arr[m] = arr[i];
-    arr[i] = t;
+function pushCardsInMainBlock(mainBlock, card, inputWth)  { // добавление карточек в основной блок
+  mainBlock.style = `grid-template-columns: repeat(${inputWth}, 1fr);`;
+  for (let i in howMuchCardsMustBe) {
+    mainBlock.append(card(i).card);
   }
 }
 
-function checkValidInputNumber(numberInput) {
-  if (numberInput % 2 != 0) {
-    alert('Please, inter even numbers!');
-    startGame();
-  }
-  if (numberInput > 16) {
-    alert('Sum can not be more than 16');
-    startGame();
+function temporarilyBlockedCard(allCards) { // Временная блокировка всех карточек
+  for (let i = 0; i < allCards.length; i++) {
+    allCards[i].classList.toggle('card-block');
   }
 }
 
-function pushNumbersInArray(number) {
-  for (let i = 0; i < number; i++) {
-    howMuchCardsMustBe.push(i);
-  }
-  for (let i = 0; i < howMuchCardsMustBe.length / 2; i++) {
-    array.push(i);
-    array.push(i);
-  }
-  createArrayRandom(array);
+function falseCoincidence(thisCard, allCards) { // несовпадение выбраных карточек
+  let backCardOne = thisCard.querySelector('.card-back');
+  let frontCardOne = thisCard.querySelector('.card-front');
+
+  let backCardTwo = temporarily.querySelector('.card-back');
+  let frontCardTwo = temporarily.querySelector('.card-front');
+
+  mySetTimeout = setTimeout(() => {
+    backCardOne.classList.toggle('card-back-buff');
+    frontCardOne.classList.toggle('card-front-buff');
+    backCardTwo.classList.toggle('card-back-buff');
+    frontCardTwo.classList.toggle('card-front-buff');
+    temporarilyBlockedCard(allCards);
+    cardClick = 0
+  }, 770);
 }
 
-function createCards(obj) {
-  let cards = document.createElement('div');
-  cards.classList.add('cards');
-  cards.id = obj.id;
-
-  cards.textContent = obj.textNumber;
-
-  cards.onclick = () => {
-    cards.classList.toggle('reverse-cards');
-    clearTimeout(picTimeout);
-    picTimeout = setTimeout(() => {
-      cards.style = `background-image: url(/img/pic-${obj.textNumber}.jpg)`
-    }, 290);
-    if (loop > 0) {
-      if (oneCard.textContent != cards.textContent) {
-        falseSetTimeout = setTimeout(() =>{
-          cards.classList.toggle('reverse-cards');
-          oneCard.classList.toggle('reverse-cards');
-          falsePicTimeout = setTimeout(() =>{
-            cards.style = `background-image: none)`;
-            oneCard.style = `background-image: none)`;
-          },290);
-        },900);
-        loop = 0;
-      }else {
-        setTimeout(() =>{
-          console.log(cards, oneCard);
-          cards.classList.toggle('card-disabled');
-          oneCard.classList.toggle('card-disabled');
-          loop = 0;
-        }, 800)
-      }
-    }else oneCard = cards, loop++ ;
-  };
-
-  return cards;
-}
-
-function takeStyle(blocks) {
-  for (let i of howMuchCardsMustBe) {
-    let obj = {
-      id: i,
-    }
-    arrayObjects.push(obj);
-  }
-  for (let elem of arrayObjects) {
-    elem['textNumber'] = array[pushed];
-    pushed++;
-  }
-  for(let i of arrayObjects) {
-    blocks.append(createCards(i));
+function checkSelectedCard(allCards, thisCard) { // анализ(проверка) выбранных(открытых) карточек
+  temporarilyBlockedCard(allCards); // блокирую карточки пока открыты 2 выбранны
+  if (thisCard.textContent == temporarily.textContent) {
+    thisCard.classList.toggle('block-card-ever');
+    temporarily.classList.toggle('block-card-ever');
+    temporarilyBlockedCard(allCards); // разблокирую все карточки кроме 2-х совпавших
+    cardClick = 0
+    checkFinish += 2;
+    checkFinishGame(); // проверка на окончание игры
+  } else {
+    falseCoincidence(thisCard, allCards); // если карточки не совпали
   }
 }
 
-function startGame(container) {
-  const startForm = createForm();
-  const downloadMainBlock = createMainBlock();
-  const pushButton = createReloadButton('Play again?');
-  container.append(startForm.form, downloadMainBlock);
+function createCard(id) { // создание карточки
+  let card = document.createElement('div');
+  let cardFront = document.createElement('div');
+  let cardBack = document.createElement('div');
+
+  card.classList.add('card');
+  cardBack.style = `background-image: url(/img/pic-${parArray[id]}.jpg);`
+  card.textContent = parArray[id];
+  card.id = id;
+  cardFront.classList.add('card-front');
+  cardBack.classList.add('card-back');
+
+  card.onclick = () => {
+    cardClick++;
+    cardFront.classList.toggle('card-front-buff');
+    cardBack.classList.toggle('card-back-buff');
+    let allCard = document.querySelectorAll('.card');
+    if (cardClick == 2) {
+      checkSelectedCard(allCard, card);
+    };
+
+    temporarily = card;
+  }
+
+  card.append(cardFront, cardBack);
+
+  return {
+    card,
+    cardFront,
+    cardBack,
+  }
+}
+
+function startGame(container) { // начало игры
+  let startForm = createForm();
+  let startMainBlock = createMainBlock();
+  const startCard = createCard;
+  container.append(startForm.form, startMainBlock);
 
   startForm.formButton.onclick = (e) => {
-    let inputWidth = Number(startForm.inputWidth.value);
-    let inputHeight = Number(startForm.inputHeight.value);
-    if (inputWidth == 0 || inputHeight == 0) {
-      alert('Please enter all input');
-      window.location.reload();
-    }
-    let numberInput = inputWidth * inputHeight;
-    checkValidInputNumber(numberInput);
+		const inputWth = startForm.inputWidth.value;
+    const inputHth = startForm.inputHeight.value;
+    const $titleTimer = document.getElementById('min');
+
+    // подготовка к выгрузке карточек
+    checkValidInput(inputWth, inputHth); // проверка валидности input
+
+    createArrAllNumbers(inputWth, inputHth); // создание массива с номерами всех карточек
+
+    createParArray(inputWth, inputHth); // создание парно-номерного массива
 
     e.preventDefault();
 
-    let form = document.getElementById('form');
-    let mainBlock = document.getElementById('card');
-    title.classList.toggle('title-animation');
-    startForm.formButton.disabled = true;
-    setTimeout(() => {
-      form.classList.toggle('form-display');
-      mainBlock.classList.toggle('card-opacity');
-    }, 1000);
-    startForm.form.classList.toggle('form-none');
+    startTimerGame($titleTimer);
 
-    pushNumbersInArray(numberInput);
-    downloadMainBlock.style = `grid-template-columns: repeat(${inputWidth}, 1fr);`;
-    takeStyle(downloadMainBlock);
-    myInterval = setInterval(() => {
-      if (min == '0') {
-        clearInterval(myInterval);
-        titleMin.textContent = 'you lose';
-        container.classList.toggle('container-opacity');
-        document.body.append(pushButton);
-      }
-      titleMin.textContent = String(min);
-      min--;
-    }, 1000);
-  };
+    pushCardsInMainBlock(startMainBlock, startCard, inputWth); // Загрузка карточек на страницу
+
+  }
 }
 
 window.startGame = startGame;
+
+
+
+
+
+
+
+

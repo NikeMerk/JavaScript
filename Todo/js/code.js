@@ -83,7 +83,6 @@
 				if (elem.id == obj.id) elem.done = !elem.done;
 				localStorage.setItem(saveList, JSON.stringify(listArray));
 			}
-			console.log(listArray)
 		};
 
 		buttonDelete.onclick = () => {
@@ -94,7 +93,6 @@
 					localStorage.setItem(saveList, JSON.stringify(listArray));
 				}
 			}
-			console.log(listArray)
 		};
 
 		return {
@@ -141,9 +139,8 @@
 			startList.append(createItem(newObj).item);
 			startForm.input.value = '';
 			startForm.formButton.disabled = true;
-			console.log(listArray);
 			localStorage.setItem(saveList, JSON.stringify(listArray));
 		}
   }
 
-	window.createTodoApp = createTodoApp;
+window.createTodoApp = createTodoApp;
