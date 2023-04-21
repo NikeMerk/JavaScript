@@ -1,0 +1,35 @@
+html {
+	box-shadow: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-shadow: inherit;
+}
+
+body {
+	font-family: sans-serif;
+}
+
+img {
+	max-width: 100%;
+}
+
+.container {
+	padding: 0 50px;
+	margin: 0 auto;
+	max-width: 1400px;
+	background: green;
+}
+
+.form {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.input {
+	width: calc((100% - 50px) / 2) ;
+}

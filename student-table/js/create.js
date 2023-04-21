@@ -8,14 +8,15 @@ function createForm() {
 	let inputFaculty = document.createElement('input');
 
 	form.classList.add('form');
-	inputName.classList.add('input-name');
-	inputSurname.classList.add('input-surname');
-	inputPatronymic.classList.add('input-patronymic');
-	inputBthDay.classList.add('input-bth-day');
-	inputStart.classList.add('input-start');
-	inputFaculty.classList.add('input-faculty');
+	inputName.classList.add('input-name', 'input');
+	inputSurname.classList.add('input-surname', 'input');
+	inputPatronymic.classList.add('input-patronymic', 'input');
+	inputBthDay.classList.add('input-bth-day', 'input');
+	inputStart.classList.add('input-start', 'input');
+	inputFaculty.classList.add('input-faculty', 'input');
 
-
+	inputBthDay.type = 'date';
+	inputStart.type = 'number';
 
 	inputName.placeholder = 'Введите имя';
 	inputSurname.placeholder = 'Введите фамилию';
@@ -23,4 +24,24 @@ function createForm() {
 	inputBthDay.placeholder = 'День рождения';
 	inputStart.placeholder = 'Начало обучения';
 	inputFaculty.placeholder = 'Факультет';
+
+
+
+	form.append (
+		inputName,
+		inputSurname,
+		inputPatronymic,
+		inputBthDay,
+		inputStart,
+		inputFaculty
+	);
+
+	return {
+		form
+	}
 }
+
+let $container = document.querySelector('.container');
+
+$container.append(createForm().form);
+console.log('hello world!');
