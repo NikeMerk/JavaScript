@@ -6,7 +6,6 @@ function createForm() {
 	let inputBthDay = document.createElement('input');
 	let inputStart = document.createElement('input');
 	let inputFaculty = document.createElement('input');
-
 	form.classList.add('form');
 	inputName.classList.add('input-name', 'input');
 	inputSurname.classList.add('input-surname', 'input');
@@ -14,19 +13,14 @@ function createForm() {
 	inputBthDay.classList.add('input-bth-day', 'input');
 	inputStart.classList.add('input-start', 'input');
 	inputFaculty.classList.add('input-faculty', 'input');
-
 	inputBthDay.type = 'date';
 	inputStart.type = 'number';
-
 	inputName.placeholder = 'Введите имя';
 	inputSurname.placeholder = 'Введите фамилию';
 	inputPatronymic.placeholder = 'Введите отчество';
 	inputBthDay.placeholder = 'День рождения';
 	inputStart.placeholder = 'Начало обучения';
 	inputFaculty.placeholder = 'Факультет';
-
-
-
 	form.append (
 		inputName,
 		inputSurname,
@@ -35,13 +29,7 @@ function createForm() {
 		inputStart,
 		inputFaculty
 	);
-
-	return {
-		form
-	}
+	return {form}
 }
-
 let $container = document.querySelector('.container');
-
 $container.append(createForm().form);
-console.log('hello world!');
