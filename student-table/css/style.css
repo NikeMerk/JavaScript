@@ -32,4 +32,9 @@ img {
 
 .input {
 	width: calc((100% - 50px) / 2) ;
+	margin-bottom: 15px;
+}
+
+.form-button {
+	margin-bottom: 10px;
 }

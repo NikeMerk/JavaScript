@@ -1,3 +1,7 @@
+let arrayObject = [];
+
+const $container = document.querySelector('.container');
+
 function createForm() {
 	let form = document.createElement('form');
 	let inputName = document.createElement('input');
@@ -6,6 +10,7 @@ function createForm() {
 	let inputBthDay = document.createElement('input');
 	let inputStart = document.createElement('input');
 	let inputFaculty = document.createElement('input');
+	let formButton = document.createElement('button');
 	form.classList.add('form');
 	inputName.classList.add('input-name', 'input');
 	inputSurname.classList.add('input-surname', 'input');
@@ -13,8 +18,10 @@ function createForm() {
 	inputBthDay.classList.add('input-bth-day', 'input');
 	inputStart.classList.add('input-start', 'input');
 	inputFaculty.classList.add('input-faculty', 'input');
+	formButton.classList.add('form-button');
 	inputBthDay.type = 'date';
 	inputStart.type = 'number';
+	formButton.innerHTML = 'add student';
 	inputName.placeholder = 'Введите имя';
 	inputSurname.placeholder = 'Введите фамилию';
 	inputPatronymic.placeholder = 'Введите отчество';
@@ -27,9 +34,22 @@ function createForm() {
 		inputPatronymic,
 		inputBthDay,
 		inputStart,
-		inputFaculty
+		inputFaculty,
+		formButton,
 	);
-	return {form}
+	return {
+		form
+	}
 }
-let $container = document.querySelector('.container');
+
+function createItemBodyTable() {
+	let tdItemName = document.createElement('td');
+	let tdItemSurName = document.createElement('td');
+	let tdItemPatronymic = document.createElement('td');
+	let tdItemBthDay = document.createElement('td');
+	let tdItemStart = document.createElement('td');
+	let tdItemFaculty = document.createElement('td');
+
+	
+}
 $container.append(createForm().form);
