@@ -69,7 +69,10 @@ allTableButtons.forEach((buttonBth) => {
 });
 
 function sortData() {
-	arrayObject.sort((a, b) => moment(b.date, 'DD.MM.YY') - moment(a.date, 'DD.MM.YY'))
+	arrayObject.sort((a, b) => {
+		console.log(Date.parse(a.birthday))
+		console.log(a.birthday);
+	})
 }
 
 function checkInputValue() {
