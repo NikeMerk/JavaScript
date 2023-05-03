@@ -7,6 +7,7 @@
 	<title>Document</title>
 	<link rel="stylesheet" href="/css/style.css">
 	<script defer src="/js/code.js"></script>
+	<script defer src="/js/moment.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -14,22 +15,22 @@
 		<table class="table" cellspacing="0" cellpadding="10">
 			<thead class="table-head">
 				<td class="table-header__elem">
-					<button class="button-name table-button" id="button-name">Имя</button>
+					<button class="button-name table-button" id="button-name" data-path="name" >Имя</button>
 				</td>
 				<td class="table-header__elem">
-					<button class="button-surname table-button" id="button-surname">Фамилия</button>
+					<button class="button-surname table-button" id="button-surname" data-path="surname">Фамилия</button>
 				</td>
 				<td class="table-header__elem">
-					<button class="button-patronymic table-button" id="button-patronymic">Отчество</button>
+					<button class="button-patronymic table-button" id="button-patronymic" data-path="patronymic">Отчество</button>
 				</td>
 				<td class="table-header__elem">
-					<button class="button-bthday table-button" id="button-bthday">д.Рождения</button>
+					<button class="button-bthday table-button" id="button-bthday" data-path="birthday">д.Рождения</button>
 				</td>
 				<td class="table-header__elem">
-					<button class="button-start-day table-button" id="button-start-day">Hачала обучения</button>
+					<button class="button-start-day table-button" id="button-start-day" data-path="start">Hачала обучения</button>
 				</td>
 				<td class="table-header__elem">
-					<button class="button-faculty table-button" id="button-faculty">Факультет</button>
+					<button class="button-faculty table-button" id="button-faculty" data-path="faculty">Факультет</button>
 				</td>
 			</thead>
 			<tbody class="table-body">
