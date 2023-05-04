@@ -28,13 +28,30 @@ img {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	margin-bottom: 30px;
 }
 
 .input {
-	width: calc((100% - 50px) / 2) ;
 	margin-bottom: 15px;
 }
 
 .form-button {
 	margin-bottom: 10px;
 }
+
+.table {
+	margin: 0 auto
+}
+
+.form-button {
+	margin: 0 auto
+}
+
+.form__blok {
+	display: flex;
+	flex-direction: column;
+	width: calc((100% - 50px) / 2);
+}
+
+
+
