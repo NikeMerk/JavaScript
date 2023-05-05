@@ -1,15 +1,9 @@
 
+// -------------------------------- Файл js с функциями создания елементов --------------------------------
+
 const $container = document.querySelector('.container');
 
-function correctDate(num) {
-	if (num >= 0 && num <= 9) return '0' + num;
-	else return num;
-}
-
-function validInputValue(value) {
-	return value[0].toUpperCase() + value.slice(1).toLowerCase();
-}
-
+// Создание нового object c данными input
 function createNewObject() {
 	let newObject = {
 		'name': validInputValue(document.getElementById('input-name').value),
@@ -23,6 +17,47 @@ function createNewObject() {
 	return newObject;
 }
 
+// Создание елемента таблицы
+function createItemFromBodyTable(obj) {
+	let tr = document.createElement('tr');
+	let tdItemName = document.createElement('td');
+	let tdItemSurName = document.createElement('td');
+	let tdItemPatronymic = document.createElement('td');
+	let tdItemBthDay = document.createElement('td');
+	let tdItemStart = document.createElement('td');
+	let tdItemFaculty = document.createElement('td');
+
+	tr.classList.add('tr');
+	tdItemName.classList.add('table__item', 'item-name');
+	tdItemSurName.classList.add('table__item', 'item-surname');
+	tdItemPatronymic.classList.add('table__item', 'item-patronymic');
+	tdItemBthDay.classList.add('table__item', 'item-bthday');
+	tdItemStart.classList.add('table__item', 'item-start');
+	tdItemFaculty.classList.add('table__item', 'item-faculty');
+
+	let newDate = new Date(obj.birthday);
+	let dateBirthday = correctedDate(converterDate(newDate.toISOString().substr(0, 10)));
+	let howOldStudent = getOldStudent(newDate);
+
+	tdItemName.textContent = obj.name;
+	tdItemSurName.textContent = obj.surname;
+	tdItemPatronymic.textContent = obj.patronymic;
+	tdItemBthDay.textContent = `${dateBirthday} (${howOldStudent} ${plural(howOldStudent, declension)})`;
+	tdItemStart.textContent = report(obj.start);
+	tdItemFaculty.textContent = obj.faculty;
+
+	tr.append (
+		tdItemName,
+		tdItemSurName,
+		tdItemPatronymic,
+		tdItemBthDay,
+		tdItemStart,
+		tdItemFaculty
+	);
+	return tr;
+}
+
+// Cоздание form
 function createForm() {
 	let form = document.createElement('form');
 
@@ -97,8 +132,18 @@ function createForm() {
 	labelForInputStart.setAttribute('for', 'start');
 	labelForInputFaculty.setAttribute('for', 'faculty');
 
-	inputBthDay.setAttribute("min", "2018-01-01");
+	let today = new Date();
+	let dayDate = today.getDate();
+	let monthDate = today.getMonth()+1;
+	let yearDate = today.getFullYear();
+	if(dayDate<10){dayDate='0'+dayDate};
+	if(monthDate<10){monthDate='0'+monthDate};
+	today = yearDate+'-'+monthDate+'-'+dayDate;
+
+	inputBthDay.setAttribute("min", "1900-01-01");
 	inputStart.setAttribute("min", "2000-01-01");
+	inputBthDay.setAttribute("max", today);
+	inputStart.setAttribute("max", today);
 
 	formButton.innerHTML = 'add student';
 
@@ -135,39 +180,6 @@ function createForm() {
 	
 	return form, formButton
 
-}
-
-function createItemFromBodyTable(obj) {
-	let tr = document.createElement('tr');
-	let tdItemName = document.createElement('td');
-	let tdItemSurName = document.createElement('td');
-	let tdItemPatronymic = document.createElement('td');
-	let tdItemBthDay = document.createElement('td');
-	let tdItemStart = document.createElement('td');
-	let tdItemFaculty = document.createElement('td');
-
-	tr.classList.add('tr');
-	tdItemName.classList.add('table__item', 'item-name');
-	tdItemSurName.classList.add('table__item', 'item-surname');
-	tdItemPatronymic.classList.add('table__item', 'item-patronymic');
-	tdItemBthDay.classList.add('table__item', 'item-bthday');
-	tdItemStart.classList.add('table__item', 'item-start');
-	tdItemFaculty.classList.add('table__item', 'item-faculty');
-
-	
-	let newDate = new Date(obj.birthday);
-	let resultDate = newDate.toISOString().substr(0, 10);
-
-	tdItemName.textContent = obj.name;
-	tdItemSurName.textContent = obj.surname;
-	tdItemPatronymic.textContent = obj.patronymic;
-	tdItemBthDay.textContent = resultDate;
-	tdItemStart.textContent = obj.start;
-	tdItemFaculty.textContent = obj.faculty;
-
-	tr.append(tdItemName, tdItemSurName, tdItemPatronymic, tdItemBthDay, tdItemStart, tdItemFaculty);
-	
-	return tr;
 }
 
 $container.append(createForm().form);

@@ -20,7 +20,7 @@ img {
 	padding: 0 50px;
 	margin: 0 auto;
 	max-width: 1400px;
-	background: green;
+	background: #7b7b7b;
 }
 
 .form {
@@ -53,5 +53,11 @@ img {
 	width: calc((100% - 50px) / 2);
 }
 
+.tr {
+	text-align: center;
+}
 
+.table-header__elem {
+	text-align: center;
+}
 
