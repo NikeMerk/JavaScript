@@ -117,10 +117,16 @@ function plural(number, titles) {
 function report(studentDate) {
 	let nowDate = new Date();
 	let nowYear = nowDate.getFullYear();
+
 	let nowMonth = nowDate.getMonth() + 1;
-	let finishDate = nowDate - studentDate;
-	console.log(nowYear)
-	console.log(nowMonth)
-	console.log(finishDate)
+	let howStudentTeach = nowYear - studentDate;
+
+	if (howStudentTeach >= 4) {
+		if (howStudentTeach = 4 && nowMonth >= 9) {
+			return `${studentDate} (закончил)`;
+		}
+		return `${studentDate} (закончил)`;
+	}
+	else return ` ${studentDate} (${howStudentTeach} курс)`
 }
 
