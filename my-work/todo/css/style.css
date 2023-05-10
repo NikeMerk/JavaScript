@@ -1,0 +1,132 @@
+html {
+  box-sizing: border-box;
+}
+
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+.page {
+	background-color: rgb(236, 250, 236);
+	background-attachment: fixed;
+}
+
+.container {
+  max-width: 800px !important; 
+  margin: 0 auto;
+	
+}
+
+.nav {
+	margin-bottom: 15px !important;
+}
+
+.link {
+	color: inherit;
+	text-decoration: none !important;
+	transition: transform 0.5s ease;
+}
+
+.link:hover {
+	transform: scale(1.2);
+	color: inherit;
+}
+
+.form {
+	display: flex;
+	margin-bottom: 15px;
+}
+
+.input {
+	width: 50% !important;
+}
+
+.form-button {
+	border-radius: 0 5px 5px 0 ;
+}
+
+.list {
+	list-style: none;
+	padding: 0;
+}
+
+.item {
+	width: 80%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;	
+	min-height: 30px;
+	padding: 5px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.item:not(:last-child) {
+	margin-bottom: 15px;
+}
+
+.text-item {
+	padding: 0;
+	margin: 0;
+}
+
+.input {
+	width: 80%;
+	border-radius: 5px 0 0 5px;
+}
+
+.button {
+	border-radius: 0 5px 5px 0;
+}
+
+.input:hover {
+	border-color: rgb(12, 210, 12);
+}
+
+.button:hover {
+	border-color: rgb(12, 210, 12);
+}
+
+.btn {
+	width: 60px;
+	padding: 0 !important;
+	border: none !important;
+}
+
+.btn:focus {
+	border-color: none !important;
+}
+
+.btn:first-child {
+	margin-right: 15px;
+}
+
+.button-done:hover {
+	box-shadow: 0px 0px 10px 4px rgba(58, 190, 63, 0.10), 0px 0px 50px 4px rgba(58, 190, 63, 0.10) inset;
+	color: rgb(12, 210, 12) !important;
+
+}
+
+.button-delete:hover {
+	box-shadow: 0px 0px 10px 4px rgba(202, 27, 27, 0.1), 0px 0px 50px 4px rgba(202, 27, 27, 0.1) inset;
+	color: red !important;
+}
+
+.item:not(:last-child) {
+	margin-bottom: 10px;
+}
+
+.item-done {
+	background-color: rgb(109, 213, 109);
+}
+
+.link:not(:last-child){
+	margin-right: 15px;
+}
+
+.item-block {
+	margin-right: 15px;
+}
