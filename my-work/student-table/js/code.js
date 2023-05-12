@@ -7,6 +7,7 @@ const takeElementsTable = createItemFromBodyTable;
 const tableBody = document.querySelector('.container .table .table-body');
 const buttonBth = document.getElementById('button-bthday');
 const allTableButtons = document.querySelectorAll('.table-button');
+const allSearchInput = document.querySelectorAll('.search-input');
 let declension = ['год', 'года', 'лет'];
 let path;
 
@@ -19,38 +20,79 @@ let path;
 formButton.onclick = (e) => {
 
 	// проверка на наличие ввода всех input
-	if (checkInputValue()) {                
+	if (checkInputValue()) {
 		e.preventDefault();
 
 		// создание объекта и добавление его в массив
-		let newObj = createNewObject();  
-		
+		let newObj = createNewObject();
+
 		// добавление елементов таблицы
 		tableBody.append(takeElementsTable(newObj));
 
 		// удаление (очищение) всех введенных input
 		deleteAllInputValue();
+
 	}
 }
+
+// СОБЫТИЕ на ввод input (filter)
+allSearchInput.forEach((input) => {
+  input.oninput = (e) => {
+
+    // проверка на заполнение input-фильтров
+    if (input.value.length == 0) arrayObject.map((obj) => {
+      tableBody.append(takeElementsTable(obj));
+      unlockingInput(input);
+    });
+    else {
+
+      // делаем disabled остальным input
+      blockingInput(input);
+
+      // присваиваем нов знач path
+      path = input.name;
+
+      // удаляем елем-ы таблицы
+      deleteAllTableElements();
+
+      // сортируем основной массив
+      arrayObject.sort(sortFunction());
+
+      // очищаем таблицу
+      tableBody.innerHTML = '';
+
+      // загружаем данные в таб-у в зависимсти от того какой инпут используется
+      chooseHowFilter(input).map((obj) => {tableBody.append(takeElementsTable(obj))});
+    }
+
+  };
+});
 
 // СОБЫТИЕ на кнопки сортировки
 allTableButtons.forEach((buttonBth) => {
 	buttonBth.onclick = (e) => {
+
 		// удаляем данные таблицы
-		deleteAllTableElements();    
+		deleteAllTableElements();
 
 		// сохраняем имя класса нажатой кнопки
-		path = e.currentTarget.dataset.path; 
+		path = e.currentTarget.dataset.path;
 
 		// сортируем массив по заданн сдассу
-		arrayObject.sort(sortFunction());    
+		arrayObject.sort(sortFunction());
 
 		// выгружаем данные отсорт-ого массива в таблицу по классу
 		arrayObject.map((obj => {tableBody.append(takeElementsTable(obj))}))
-		console.log(arrayObject)
 	}
 });
 
+// выбор фильтрации
+function chooseHowFilter(input) {
+  if (path === 'surname') return filterFio(input.value);
+  if (path === 'birthday') return filterBirthday(input.value);
+  if (path === 'start') return filterStartTeach(input.value);
+  if (path === 'faculty') return filterFaculty(input.value);
+}
 
 
 // --- --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ --- ---
@@ -70,10 +112,67 @@ function deleteAllTableElements() {
 	allElementTable.forEach(elem => elem.remove());
 }
 
+// блокировка неактивных input-filter
+function blockingInput(selectedInput) {
+  allSearchInput.forEach((input) => {
+    if (input != selectedInput) input.disabled = true;
+  })
+}
+
+// разблокировка неактивных input-filter
+function unlockingInput(input) {
+  allSearchInput.forEach((input) => {input.disabled = false;})
+}
+
+// фильтр по ФИО
+function filterFio(inputValue) {
+  let newArray = [...arrayObject];
+  let result = newArray.filter((obj) => {
+    if (
+      obj.name.toLowerCase().includes(inputValue.trim().toLowerCase()) ||
+      obj.surname.toLowerCase().includes(inputValue.trim().toLowerCase()) ||
+      obj.patronymic.toLowerCase().includes(inputValue.trim().toLowerCase()))
+      {
+        return true;
+      }
+  })
+  return result;
+}
+
+// фильтр по Д.Р
+function filterBirthday(inputValue) {
+  let valueDate = Date.parse(inputValue)
+  let newArray = [...arrayObject];
+  let result = newArray.filter((obj) => {
+    if (obj.birthday === valueDate) return true;
+  });
+  return result;
+}
+
+// фильтр по началу обучения
+function filterStartTeach(inputValue) {
+  let newArray = [...arrayObject];
+  let numberInput = Number(inputValue)
+
+  let result = newArray.filter((obj) => {
+    if (obj.start === numberInput) return true;
+  })
+  return result;
+}
+
+// фильтр по факультету
+function filterFaculty(inputValue) {
+  let newArray = [...arrayObject];
+  let result = newArray.filter((obj) => {
+    if ((obj.faculty.toLowerCase()).includes((inputValue.trim()).toLowerCase())){return true;}
+  })
+  return result;
+}
+
 // проверка валид input
 function checkInputValue() {
-	let allInput = document.querySelectorAll('input');
 	let result = true;
+	let allInput = document.querySelectorAll('.input');
 	allInput.forEach((input) => {
 		if (!input.value) result = false;
 	});
@@ -108,9 +207,9 @@ function getOldStudent(birthdayStudent) {
 }
 
 // корректная выдача года -> (1 год, 4 года, 5 лет)
-function plural(number, titles) {  
-	cases = [2, 0, 1, 1, 1, 2];  
-	return titles[ (number%100>4 && number%100<20) ? 2 : cases[(number%10<5)?number%10:5] ];  
+function plural(number, titles) {
+	cases = [2, 0, 1, 1, 1, 2];
+	return titles[ (number%100>4 && number%100<20) ? 2 : cases[(number%10<5)?number%10:5] ];
 }
 
 // отчет оставшихся лет учебы

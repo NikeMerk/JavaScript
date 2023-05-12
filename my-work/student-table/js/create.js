@@ -19,6 +19,7 @@ function createNewObject() {
 
 // Создание елемента таблицы
 function createItemFromBodyTable(obj) {
+  console.log('hello world')
 	let tr = document.createElement('tr');
 	let tdItemName = document.createElement('td');
 	let tdItemSurName = document.createElement('td');
@@ -93,7 +94,7 @@ function createForm() {
 	blockInputFaculty.classList.add('form__blok', 'block-input-faculty')
 
 	labelForInputName.classList.add('form__label', 'label')
-	labelForInputSurname.classList.add('form__label', 'label')	
+	labelForInputSurname.classList.add('form__label', 'label')
 	labelForInputPatronymic.classList.add('form__label', 'label')
 	labelForInputBthDay.classList.add('form__label', 'label')
 	labelForInputStart.classList.add('form__label', 'label')
@@ -105,6 +106,7 @@ function createForm() {
 	inputBthDay.classList.add('input-bth-day', 'input');
 	inputStart.classList.add('input-start', 'input');
 	inputFaculty.classList.add('input-faculty', 'input');
+  formButton.classList.add('form-button');
 
 	inputName.id = 'input-name';
 	inputSurname.id = 'input-surname';
@@ -145,7 +147,8 @@ function createForm() {
 	inputBthDay.setAttribute("max", today);
 	inputStart.setAttribute("max", today);
 
-	formButton.innerHTML = 'add student';
+	formButton.innerHTML = 'Добавить студента';
+  formButton.type = 'submit';
 
 	labelForInputName.textContent = 'Введите имя';
 	labelForInputSurname.textContent = 'Введите фамилию';
@@ -177,10 +180,82 @@ function createForm() {
 		blockInputFaculty,
 		formButton,
 	);
-	
+
 	return form, formButton
 
 }
 
-$container.append(createForm().form);
+function createSearchBlockInput() {
+  let title = document.createElement('h3');
+  let mainBlock = document.createElement('div');
+  let blockInputName = document.createElement('div');
+  let blockInputBirthday = document.createElement('div');
+  let blockInputStart = document.createElement('div');
+  let blockInputFaculty = document.createElement('div');
+
+  let inputName = document.createElement('input');
+  let inputBirthday = document.createElement('input');
+  let inputStart = document.createElement('input');
+  let inputFaculty = document.createElement('input');
+
+  let labelInputName = document.createElement('label');
+  let labelInputBirthday = document.createElement('label');
+  let labelInputStart = document.createElement('label');
+  let labelInputFaculty = document.createElement('label');
+
+  title.classList.add('search-title');
+
+  blockInputName.classList.add('search-block-input');
+  blockInputBirthday.classList.add('search-block-input');
+  blockInputStart.classList.add('search-block-input', 'search-block-start');
+  blockInputFaculty.classList.add('search-block-input');
+
+  mainBlock.classList.add('main-block');
+  inputName.classList.add('search-input-name', 'search-input');
+  inputBirthday.classList.add('search-input-inputBirthday', 'search-input');
+  inputStart.classList.add('search-input-inputStart', 'search-input');
+  inputFaculty.classList.add('search-input-inputFaculty', 'search-input');
+
+  title.textContent = 'Сортировать по:'
+
+  labelInputName.textContent = 'ФИО';
+  labelInputBirthday.textContent = 'Дата рождения';
+  labelInputStart.textContent = 'Год нач. обучения';
+  labelInputFaculty.textContent = 'Факультет';
+
+ inputName.placeholder = 'Иванов Иван Иванович'
+ inputStart.placeholder = '2000г'
+ inputFaculty.placeholder = 'Химии'
+
+  inputName.type = 'text';
+  inputBirthday.type = 'date';
+  inputStart.type = 'number';
+  inputFaculty.type = 'text';
+
+  labelInputName.setAttribute('for', 'name');
+  labelInputBirthday.setAttribute('for', 'birthday');
+  labelInputStart.setAttribute('for', 'start');
+  labelInputFaculty.setAttribute('for', 'faculty');
+
+  inputName.setAttribute('name', 'surname');
+  inputBirthday.setAttribute('name', 'birthday');
+  inputStart.setAttribute('name', 'start');
+  inputFaculty.setAttribute('name', 'faculty');
+
+  blockInputName.append(labelInputName, inputName);
+  blockInputBirthday.append(labelInputBirthday, inputBirthday);
+  blockInputStart.append(labelInputStart, inputStart);
+  blockInputFaculty.append(labelInputFaculty, inputFaculty);
+
+  mainBlock.append(
+    title,
+    blockInputName,
+    blockInputBirthday,
+    blockInputStart,
+    blockInputFaculty,
+  );
+
+  return mainBlock;
+}
+$container.append(createForm().form, createSearchBlockInput());
 
