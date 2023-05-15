@@ -1,35 +1,4 @@
-.card {
-	border: 1px solid black;
-	border-radius: 10px;
-	width: 200px;
-	height: 200px;
-	position: relative;
-	perspective: 1000px;
-}
-
-.front {
-	background-color: aqua;
-}
-
-.front, .back {
-	border-radius: 10px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	backface-visibility: hidden;
-	transition: transform .5s ease-in-out;
-}
-
-.back {
-	transform: rotateY(180deg);
-	background-color: blanchedalmond;
-}
-
-.card:hover .front {
-	transform: rotateY(180deg);
-}
-.card:hover .back {
-	transform: rotateY(360deg);
+.button {
+	width: 100px;
+	height: 100px;
 }
