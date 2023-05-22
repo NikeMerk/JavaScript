@@ -1,23 +1,18 @@
 
-
-const button = document.querySelector('.container .button');
+let arr = [1, 2, 4, 5, 6];
+let button = document.querySelector('.container .button');
+let count = 1;
 
 button.onclick = () => {
-	arr.sort((a, b) =>{
-		if (a.surname === b.surname) {
-			return sortOnName(a, b);
+	arr.sort((a, b) => {
+		if (count >= 1) {
+			if (a < b) return 1;
+			else return -1;
+		}else {
+			if (a > b) return 1;
+			else return -1;
 		}
-		if (a.surname > b.surname) return 1;
-		else return -1;
 	})
-	console.log(arr)
+	console.log(arr);
 };
-
-function sortOnName(a, b) {
-	if (a.name > b.name) return 1;
-	else return -1;
-}
-
-
-
 

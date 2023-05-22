@@ -22,17 +22,25 @@ catch (error) {/* обработка ошибки*/}
 // }
 
 
-// function getArr(json) {
-// 	return JSON.parse(json);
-// }
-// try {
-// 	let arr = getArr('[1,2w,3,4,5]');
-// 	console.log(arr);
-// }catch (error) {
-// 	console.log(error.name); // имя ошибки
-// 	console.log(error.message); // текст ошибки
-// }
+function getArr(json) {
+	return JSON.parse(json);
+}
+try {
+	let arr = getArr('[1,2w,3,4,5]');
+	console.log(arr);
+}catch (error) {
+	console.log(error.name); // имя ошибки
+	console.log(error.message); // текст ошибки
+}
 
+function getResult(arr) {
+	return JSON.stringify(arr);
+}
+try {
+
+}catch (error) {
+
+}
 
 
 // let variableJson = "[1, 2, 4, 5, 6]";
@@ -59,10 +67,6 @@ catch (error) {/* обработка ошибки*/}
 // }
 
 
-
-// В JavaScript предусмотрено решение этой проблемы: можно выбрасывать
-// исключения не только типа Error, но и любого встроенного в JavaScript
-// типа ошибки, например, TypeError, SyntaxError, RangeError.
 // try {
 // 	throw new SyntaxError('текст исключения');
 // } catch (error) {

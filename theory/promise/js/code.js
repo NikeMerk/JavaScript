@@ -1,38 +1,83 @@
-console.log('hello world');
 
-// пример работы с ассинхронностями
-// типо тут кароче это, ну...с сервака грузится чё то короче, 
-// вот, ну и типо короче загрузилось да... воооот, а надо добавить
-// ключ в объект но прежде, дождаться скачивания...короче ты понял 
-// да...хыыы еба..
+// У промиса есть 2 сосотояния Pending - ожидание
+// меняеться на full-filled при вызове resolve or reject 
 
-// console.log('Downloading object...');
-// setTimeout(() => {
-// 	let object = {
-// 		name: 'Nike',
-// 		surname: 'Merkushev',
-// 	};
-// 	console.log(object);
-// 	console.log('Push in object kay "age"');
+// let a = 5;
+// let b = 10;
+
+// let promise = new Promise((resolve, reject) => {
 // 	setTimeout(() => {
-// 		object.age = 45;
-// 		console.log(object)		
+// 		if (b > a) resolve('да больше'); // создающий код
+// 		else reject('нет, меньше');
 // 	}, 1000);
-// },1000);
+// });
+// promise
+// .then((result) => {
+// 	console.log(result);
+// })
+// .catch((e) => {
+// 	console.log(e)
+// })
 
 
-console.log('Downloading object...');
-const promiseOne = new Promise(function(resolve, reject) {
+// function getTodo() {
+// 	fetch('https://jsonplaceholder.typicode.com/posts')
+// 	.then((result) => {
+// 		console.log(result);
+// 		return result.json();
+// 	})
+// 	.then((result) => {
+// 		console.log(result);	
+// 	})
+// }
+// getTodo();
 
-	setTimeout(() => {
-		let object = {
-			name: 'Nike',
-			surname: 'Merkushev',
-		};
-		resolve(object);
-	}, 1000);
-})
+// async function getTodoOne() {
+// 	let awaitOne = await fetch('https://jsonplaceholder.typicode.com/posts');
+// 	let awaitTwo =  await awaitOne.json();
+// 	return awaitTwo;
+// }
+// getTodoOne().then((result) => {console.log(result);});
 
-promiseOne.then(() => {
-	console.log('promise resolved')
-});
+
+
+// function addPost(obj) {
+// 	fetch('https://gorest.co.in/public/v2/users', {
+// 		method: 'POST',
+// 		body: JSON.stringify(obj),
+// 		headers: {
+// 			'Content-Type': 'application/json',
+// 		}
+// 	})
+// 	.then(result => {
+// 		return result.json();
+// 	})
+// 	.then(result => {console.log(result);});
+// }
+// addPost({
+// 	userId: 1,
+// 	title: 'hello world',
+// 	body: 'my name is Nike',
+// });
+
+
+function deletePost(id) {
+	fetch(`https://gorest.co.in/public/v2/posts/${id}`, {
+		method: 'DELETE',
+		headers: {
+			authorization: 'Bearer 5b0b8afdb9b4d40cf681127bd78140c4d27d604f581d9c9c306719c42fc947a0', 
+		}
+	})
+	.then(result => {
+		return result.json();
+	})
+	.then(abc => {
+		console.log(abc);
+	})
+	.catch(e => {console.log(e.message);});
+}
+deletePost(29304)
+
+
+
+
