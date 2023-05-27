@@ -1,18 +1,15 @@
 
-let arr = [1, 2, 4, 5, 6];
-let button = document.querySelector('.container .button');
-let count = 1;
+function bind(context, func) {
+	return function(func) {
 
-button.onclick = () => {
-	arr.sort((a, b) => {
-		if (count >= 1) {
-			if (a < b) return 1;
-			else return -1;
-		}else {
-			if (a > b) return 1;
-			else return -1;
-		}
-	})
-	console.log(arr);
-};
+	}
+}
+let personOne = {name: 'John', age:22, job: 'Frontend'}
+let personTwo = {name: 'Nike', age:33, job: 'backand'}
+
+
+
+
+
+
 
