@@ -1,0 +1,64 @@
+html {
+	box-sizing: border-box;
+}
+*,*::before,*::after {
+	box-sizing: inherit;
+}
+
+.flex {
+	display: flex;
+}
+.page {
+	position: relative;
+}
+img {
+	width: 40%;
+	height: 40%;
+	z-index: 1;
+}
+.block-page-tyan {
+	position: absolute;
+	left: -925px;
+	transition: left .2s ease-in-out;
+	z-index: 1;
+}
+.tyan-visible {left: -25px;}
+
+.container {
+	width: 1200px;
+	margin: 0 auto;
+	align-items: center;
+	z-index: 1000;
+}
+.form {
+	width: 42%;
+	margin: 0 auto;
+	flex-direction: column;
+}
+.input {
+	width: 200px;
+	border-radius: 5px;
+	border: 2px solid rgb(0, 204, 204);
+	width: 500px;
+	height: 50px;
+	font-size: 20px;
+}
+.form__button {
+	background-color: inherit;
+	cursor: pointer;
+	border: none;
+	border-radius: 17px;
+	padding: 15px 10px;
+	font-size: 17px;
+	transition: background-color .1s ease-in-out, transform .1s ease-in-out;
+}
+.form__button:hover {
+	transform: scale(1.1);
+	background-color: rgb(230, 210, 252);
+}
+.form__button:active {transform: scale(1);}
+input::placeholder {font-size: 18px;}
+.input:not(:last-child) {margin-bottom: 20px;}
+.input:focus {outline: none;}
+.input-valid {border-color: rgb(0, 244, 0);}
+.input-false {border-color: red;}

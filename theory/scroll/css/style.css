@@ -1,0 +1,25 @@
+html {
+	box-sizing: border-box;
+}
+*,*::before,::after {
+	box-sizing: inherit;
+}
+.scroll-button-visible {
+	display: block !important;
+}
+.scroll-button {
+	display: none;
+	position: fixed;
+	bottom: 5px;
+	right: 5px;
+	padding: 7px 20px;
+	background-color: tomato;
+	border: none;
+	color: white;
+	cursor: pointer;
+	border-radius: 7px;
+	transition: background-color .1s ease-in-out;
+}	
+.scroll-button:hover {
+	background-color: rgba(247, 137, 118, 0.705)
+}

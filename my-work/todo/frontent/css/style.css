@@ -27,12 +27,15 @@ html {
 .link {
 	color: inherit;
 	text-decoration: none !important;
-	transition: transform 0.5s ease;
+	transition: transform 0.2s ease;
 }
 
 .link:hover {
 	transform: scale(1.2);
 	color: inherit;
+}
+.link:active {
+	transform: scale(1);
 }
 
 .form {

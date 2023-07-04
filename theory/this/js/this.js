@@ -1,14 +1,22 @@
-let input = document.querySelector('#input');
-input.value = 'hello world';
+// let $ = document.querySelector.bind(document);
+// const $container = $('.container');
+// const Create = document.createElement.bind(document);
 
-// input.addEventListener('blur', () => {
-// 	this.value = 'hello pig';
-// console.trace();
-// });
+// function onButtonClick() {
 
+// 	// This в обр-е событий всегда будет тем елементом на котором весит обработчик
+// 	this.innerHTML = String(Number(this.innerHTML) + 1)
+// }	
 
-input.addEventListener('blur', getInput);
-function getInput() {
-	this.value = 'hello pig';
-	console.trace();
-};
+// function createButton() {
+// 	let count = 0;
+// 	while(count != 5) {
+// 		let button = Create('button');
+// 		button.textContent = 0
+// 		button.addEventListener('click', onButtonClick);
+// 		$container.append(button);
+// 		count++
+// 	}
+// }
+
+// createButton()

@@ -5,9 +5,43 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>This</title>
-	<script defer src="/js/this/js/this.js"></script>
+	<script defer src="/this/js/this.js"></script>
 </head>
 <body>
-	<input type="text" id="input">
+	<div id="container">
+		<div id="container-one">
+			<div id="container-two">
+				element with addEventListener
+			</div>
+		</div>
+	</div>
+
+	<form id="name-form" class="name-form">
+		<input id="input" name="name" type="text" placeholder="input your name">
+		<br>
+		<button id="button" class="button">add</button>
+	</form>
+	<p id="name-display" class="name-display"></p>
+	<script defer>
+		document.getElementById('input').addEventListener('input', event => {
+			console.log(event.target.value);
+		}, {capture: true});
+		let arr = ['container', 'container-one', 'container-two'].forEach((id) => {
+			let element = document.getElementById(id).onclick = (e) => {
+				console.log(e.currentTarget)
+			};
+		})
+
+		let arrTwo = ['container', 'container-one', 'container-two'].forEach((id) => {
+			const element = document.getElementById(id);
+			element.addEventListener('click', (e) => {
+				console.log('down...', id)
+			}, true);
+			element.addEventListener('click', (e) => {
+				console.log('up...', id)
+			}, false);
+		});
+
+	</script>
 </body>
 </html>
