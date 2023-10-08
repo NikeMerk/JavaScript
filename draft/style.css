@@ -1,0 +1,15 @@
+input {
+	width: 30px;
+}
+.text {
+	margin: 0;
+	width: 30px;
+	height: 30px;
+	border: 1px solid black;
+
+}
+.form {
+	height: 30px;
+	display: flex;
+	margin-bottom: 30px;
+}
