@@ -1,0 +1,15 @@
+@mixin titleReset {
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+}
+@mixin textReset {
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+}
+@mixin listReset {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}

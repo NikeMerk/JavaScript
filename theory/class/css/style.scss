@@ -1,0 +1,13 @@
+@import "_item.scss";
+
+html {
+	box-sizing: border-box;
+}
+*,*::after,*::before {
+	box-sizing: inherit;
+}
+.container {
+	margin: 0 auto;
+	max-width: 1200px;
+	background-color: rgb(50, 197, 197);
+}

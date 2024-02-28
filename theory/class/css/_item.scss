@@ -1,0 +1,14 @@
+.card {
+  padding: 0 10px;
+  height: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  border: 1px solid black;
+  width: 80%;
+
+  &__button-done {
+    margin-right: 20px;
+  }
+}

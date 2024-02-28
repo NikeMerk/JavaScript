@@ -1,0 +1,27 @@
+.card {
+  padding: 0 10px;
+  height: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  border: 1px solid black;
+  width: 80%;
+}
+.card__button-done {
+  margin-right: 20px;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *::after, *::before {
+  box-sizing: inherit;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+  background-color: rgb(50, 197, 197);
+}/*# sourceMappingURL=style.css.map */
